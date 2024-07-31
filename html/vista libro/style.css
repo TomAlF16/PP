@@ -76,6 +76,37 @@ nav{
     line-height: 60px; 
 }
 
+
+
+#cantidad {
+    height: 39px;
+    width: 150px;
+    background-color: rgb(115, 115, 115, 255);
+    border-radius: 14px;
+    margin: 10px auto; 
+    font-size:small;
+    color: white;
+    line-height: 42px; 
+    margin-left: 12%;
+
+}
+
+#unidad {
+    height: 39px;
+    width: 150px;
+    background-color: rgb(160,154,154,255);
+    
+    margin: 10px auto; 
+    font-size:small;
+    color: white;
+    line-height: 42px; 
+    margin-left: 49%;
+    margin-top: -49px;
+
+}
+
+
+
 #agregarcarro {
     height: 60px;
     width: 275px;
@@ -87,7 +118,19 @@ nav{
     line-height: 60px; 
     
 }
+#parteGris2{
+    height: 285px;
+    width: 1374px;
 
+    background-color: rgb(160,154,154,255);
+    border-radius: 14px;
+    margin: 10px auto; 
+    text-align: center;
+    color: white;
+
+    
+
+}
 
 #espacioLibro {
     height: 497px;
