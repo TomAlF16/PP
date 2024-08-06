@@ -132,6 +132,20 @@ nav{
 
 }
 
+#partebordo{
+    height: 36px;
+    width: 365px;
+
+    
+    border-radius: 14px;
+    margin: 10px auto; 
+    text-align: center;
+    color: rgb(206, 39, 39);
+
+    
+
+}
+
 #espacioLibro {
     height: 497px;
     width: 320px;
