@@ -122,13 +122,31 @@ nav{
     height: 285px;
     width: 1374px;
 
-    background-color: rgb(160,154,154,255);
-    border-radius: 14px;
+    background-color: rgb(217,217,217,100);
+
     margin: 10px auto; 
     text-align: center;
     color: white;
+    border-color: red;
+    border-style: solid;
+    
+
+}
+#partebordo2{
+    height: 35px;
+    width: 365px;
+    font-size: large;
+    color: white;
+    text-align: center;
+    background-color: #800202;
+    text-align: left;
+     
+    
+
 
     
+
+
 
 }
 
@@ -141,6 +159,7 @@ nav{
     margin: 10px auto; 
     text-align: center;
     color: rgb(206, 39, 39);
+
 
     
 
