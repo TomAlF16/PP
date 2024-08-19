@@ -1,0 +1,257 @@
+
+:root{ 
+    --ColorPrincipal: #800202;;
+    
+
+}
+*{
+
+    padding: 0px;
+
+
+}
+body{
+    margin: 0;
+}
+#title{
+
+    color: hsl(0, 11%, 95%);
+    margin: 10px;
+    display: flex;
+    
+    
+    
+    
+    
+}
+nav{
+    background-color: var(--ColorPrincipal);
+    height: 90px;
+    text-align: center;
+    width: 150%;
+    
+}
+
+
+#lupa{
+    width: 20px;
+    height: 20px;
+    padding: 0px;
+}
+
+#CerrarSesion{
+    width: 79px;
+    height: 37px;
+    border-color: #818181;
+    background-color: white;
+    margin-top: 2%;
+    border-style: solid;
+    margin-left: 3%;
+    border-radius: 10%;
+    font-size: x-small;
+    text-align: center;
+    
+
+}
+
+#ParteGris {
+    border-radius: 5px;
+    background-color: rgb(207, 205, 205, 255);
+    height: 289px;
+    width: 398px;
+    margin-top: -450px;
+    text-align: center;
+    padding-top: 20px;
+    
+    font-size: large;
+    text-align: left;
+    
+}
+#ParteBlanca {
+    border-radius: 5px;
+    background-color: rgb(255, 255, 255);
+    width: 396px;
+    height: 184px;
+    margin-top: 2%;
+    margin-left: 1px;
+    color: black;
+    font-size: x-large;
+    text-align: left;
+    padding-top: 20px; 
+}
+
+
+/* Estilos específicos para cada h2 */
+#stock {
+    height: 39px;
+    width: 291px;
+    background-color: rgb(115, 115, 115, 255);
+    border-radius: 14px;
+    margin: 10px auto; 
+    font-size:small;
+    color: white;
+    line-height: 42px; 
+}
+
+
+
+#comprar {
+    height: 60px;
+    width: 275px;
+    background-color: rgb(115, 115, 115, 255);
+    border-radius: 14px;
+    margin: 10px auto; 
+    text-align: center;
+    color: white;
+    line-height: 60px; 
+}
+
+
+
+#cantidad {
+    height: 39px;
+    width: 150px;
+    background-color: rgb(115, 115, 115, 255);
+    border-radius: 14px;
+    margin: 10px auto; 
+    font-size:small;
+    color: white;
+    line-height: 42px; 
+    margin-left: 12%;
+
+}
+
+#unidad {
+    height: 39px;
+    width: 150px;
+    background-color: rgb(160,154,154,255);
+    
+    margin: 10px auto; 
+    font-size:small;
+    color: white;
+    line-height: 42px; 
+    margin-left: 49%;
+    margin-top: -49px;
+
+}
+
+
+
+#agregarcarro {
+    height: 60px;
+    width: 275px;
+    background-color: rgb(166, 165, 165, 255);
+    border-radius: 14px;
+    margin: 10px auto; 
+    text-align: center;
+    color: white;
+    line-height: 60px; 
+    
+}
+#parteGris2{
+    height: 285px;
+    width: 1374px;
+
+    background-color: rgb(217,217,217,100);
+
+    margin: 10px auto; 
+    text-align: center;
+    color: white;
+    border-color: red;
+    border-style: solid;
+    
+
+}
+#partebordo2{
+    height: 35px;
+    width: 365px;
+    font-size: large;
+    color: white;
+    text-align: center;
+    background-color: #800202;
+    text-align: left;
+     
+    
+
+
+    
+
+
+
+}
+
+#partebordo{
+    height: 36px;
+    width: 365px;
+
+    
+    border-radius: 14px;
+    margin: 10px auto; 
+    text-align: center;
+    color: rgb(206, 39, 39);
+
+
+    
+
+}
+
+#espacioLibro {
+    height: 497px;
+    width: 320px;
+    background-color:aqua;
+    margin-top: 5%;
+    margin-left: 2%;
+    
+}
+#titulo {
+margin-left: -50%;
+margin-top: -400px;
+font-size: xx-large;
+
+    
+}
+#nombreAutor {
+    margin-left: -50%;
+    margin-top: 50px;
+    font-size: x-large;
+    margin-top: 10px;
+
+        
+    }
+    
+
+    #precio {
+        margin-left: -50%;
+        margin-top: 150px;
+        font-size: xx-large;
+     
+    
+            
+        }
+#ValorPrecio {
+            margin-left: -50%;
+            margin-top: 10px;
+            font-size: x-large;
+         
+        
+                
+            }
+            .search-bar {
+                display: flex;
+                align-items: center;
+            }
+            
+            .search-bar input {
+                padding: 5px;
+                border: none;
+                border-radius: 3px;
+            }
+            
+            .search-bar button {
+                background-color: white;
+                border: none;
+                border-radius: 3px;
+                padding: 5px;
+                margin-left: 5px;
+                cursor: pointer;
+            }
