@@ -255,3 +255,9 @@ font-size: xx-large;
                 margin-left: 5px;
                 cursor: pointer;
             }
+            .circle {
+                width: 100px; /* Ancho del círculo */
+                height: 100px; /* Alto del círculo */
+                background-color: #ffffff; /* Color del círculo */
+                
+            }
