@@ -1,5 +1,6 @@
 body {
     font-family: Arial, sans-serif;
+    font-weight: 600;
     margin: 0;
     padding: 0;
 }
@@ -8,7 +9,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #c30e2d;
+    background-color: #000000;
     padding: 10px;
 }
 
@@ -38,10 +39,46 @@ header {
     cursor: pointer;
 }
 
-.banner img {
+.container {
+    height: 100vh;
     width: 100%;
-    height: auto;
+    display: grid;
+    place-content: center;
 }
+
+.slide {
+    width: 100vw;
+    max-width: 1000px;
+    height: 720px;
+    overflow: hidden;
+    border-radius: 10px;
+
+}
+
+.slide ul {
+    display: flex;
+    padding: 0;
+    width: 400%;
+
+    animation: slide 15s infinite cubic-bezier(0.55, 0.48, 0.47, 0.92);
+}
+
+
+@keyframes slide {
+    0% {margin-left: 0;}
+    20% {margin-left: 0;}
+
+    25% {margin-left: -100;}
+    45% {margin-left: -100;}
+
+    50% {margin-left: -200;}
+    70% {margin-left: -200;}
+
+    75% {margin-left: -300;}
+    100% {margin-left: -300;}
+
+}
+
 
 .carousel {
     display: flex;
@@ -91,6 +128,5 @@ header {
 .book img {
     width: 100%;
     height: auto;
-    border: 1px solid #ccc;
     border-radius: 5px;
 }
