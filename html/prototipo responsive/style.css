@@ -229,3 +229,50 @@ font-size: xx-large;
     width: 100%;
     
 }
+
+
+
+
+:root { 
+    --ColorPrincipal: #800202;
+}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    margin: 0;
+}
+nav {
+    background-color: var(--ColorPrincipal);
+    height: 90px;
+}
+.navbar-brand {
+    color: hsl(0, 11%, 95%);
+}
+.title-box {
+    background-color: hsl(0, 11%, 95%);
+    color: #464646;
+    font-size: x-large;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+.search-bar input {
+    padding: 5px;
+    border: none;
+    border-radius: 3px;
+}
+.search-bar button {
+    background-color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+.btn-dark-custom {
+    background-color: #464646;
+    color: white;
+}
