@@ -1,4 +1,5 @@
 
+
 :root{ 
     --ColorPrincipal: #800202;;
     
@@ -12,6 +13,7 @@
 }
 body{
     margin: 0;
+
 }
 #title{
 
@@ -19,7 +21,7 @@ body{
     margin: 10px;
     display: flex;
     
-    
+   
     
     
     
@@ -196,9 +198,11 @@ nav{
 }
 
 #espacioLibro {
-    height: 275px;
-    width: 204px;
+    height: 225px;
+    width: 154px;
     background-color:aqua;
+    position: absolute;
+    top:110px;
 
     
 }
