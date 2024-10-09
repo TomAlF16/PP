@@ -56,7 +56,16 @@
             <div id="espacioDelUsuario">
                 <img src="1077114.png" width="64" height="64" style="margin-top: 1.5%;"> 
                 <div style=" margin-top: -4%; margin-left: 8%;">
-                    *Nombre de espacioDelUsuario
+                <?php
+$stmt = $db->prepare("SELECT idUsuario FROM usuario WHERE nombre = :user_check");
+$stmt->bindParam(':user_check', $user_check);
+$stmt->execute();
+
+
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+$id_Usuario = $row['idUsuario'];
+?>
+
                 </div>
                 <img onclick="mostrar()"  src="png-transparent-gear.png" width="64" height="64" style="margin-top: -3%; margin-left: 90%;"> 
             </div>

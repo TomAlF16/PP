@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['Email'];
     //obtiene los valores de los campos contraseña y email
 
-    $sql = "SELECT id_usuario FROM usuario WHERE email = :email and contraseña = :contrasenia";
+    $sql = "SELECT idUsuario FROM usuario WHERE email = :email and contraseña = :contrasenia";
 
     $stmt = $conexion_db->prepare($sql);
     $stmt->bindParam(':email', $email);
