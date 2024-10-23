@@ -56,16 +56,36 @@
             <div id="espacioDelUsuario">
                 <img src="1077114.png" width="64" height="64" style="margin-top: 1.5%;"> 
                 <div style=" margin-top: -4%; margin-left: 8%;">
+                    
                 <?php
-$stmt = $db->prepare("SELECT idUsuario FROM usuario WHERE nombre = :user_check");
+require_once 'C:/xampp/htdocs/PP/phpFiles/vistas responsive en hmtl/administrar usuarios/conexion.php';
+
+if (!$conexion_db) {
+    die("La conexión falló.");
+}
+
+$user_check = 'Escroto McBolas'; // Cambia esto al nombre que deseas buscar
+
+// Preparar la consulta
+$stmt = $conexion_db->prepare("SELECT idCliente, nombre FROM cliente WHERE nombre = :user_check");
 $stmt->bindParam(':user_check', $user_check);
 $stmt->execute();
 
-
+// Ejecutar la consulta
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
-$id_Usuario = $row['idUsuario'];
+if ($row) {
+    $id_Cliente = $row['idCliente'];
+    $nombre_Cliente = $row['nombre']; // Almacena el nombre del cliente
+} else {
+    $id_Cliente = null; 
+    $nombre_Cliente = null; // Maneja el caso de no encontrar el cliente
+}
 ?>
-
+  <?php if ($nombre_Cliente): ?>
+        <p>Nombre del cliente: <?php echo htmlspecialchars($nombre_Cliente); ?></p>
+    <?php else: ?>
+        <p>No se encontró el cliente.</p>
+    <?php endif; ?>
                 </div>
                 <img onclick="mostrar()"  src="png-transparent-gear.png" width="64" height="64" style="margin-top: -3%; margin-left: 90%;"> 
             </div>
