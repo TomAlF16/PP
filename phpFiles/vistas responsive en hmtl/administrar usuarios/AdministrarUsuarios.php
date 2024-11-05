@@ -1,3 +1,53 @@
+<?php
+// Activar la visualización de errores
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// Incluir el archivo de conexión a la base de datos
+include("conexion.php");
+
+// Iniciar o restaurar la sesión
+session_start();
+//$_SESSION['login_user'] = 'OscarAlberto';
+// Inicializar la variable para evitar el aviso
+$nombre_Cliente = null;
+
+// Verificar si el usuario ya está logueado
+if (!isset($_SESSION['login_user'])) {
+    // Si no está logueado, obtener el primer usuario de la tabla
+    $stmt = $conexion_db->prepare("SELECT idCliente, nombre FROM cliente LIMIT 1");
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if ($row) {
+        $_SESSION['login_user'] = $row['nombre']; // Almacenar el usuario en la sesión
+    } else {
+        // Si no hay usuarios en la tabla, mostrar un mensaje de error
+        die("No se encontraron usuarios en la tabla de clientes.");
+    }
+}
+
+// Configurar el nombre del cliente a buscar
+$user_check = $_SESSION['login_user'];
+
+// Preparar la consulta SQL para buscar información del cliente
+$stmt = $conexion_db->prepare("SELECT idCliente, nombre FROM cliente WHERE nombre = :user_check");
+$stmt->bindParam(':user_check', $user_check);
+$stmt->execute();
+
+// Obtener los resultados de la consulta
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Verificar si se encontró el cliente
+if ($row) {
+    $id_Cliente = $row['idCliente'];
+    $nombre_Cliente = $row['nombre'];
+} else {
+    $id_Cliente = null;
+    $nombre_Cliente = null;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,34 +107,10 @@
                 <img src="1077114.png" width="64" height="64" style="margin-top: 1.5%;"> 
                 <div style=" margin-top: -4%; margin-left: 8%;">
                     
-                <?php
-require_once 'C:/xampp/htdocs/PP/phpFiles/vistas responsive en hmtl/administrar usuarios/conexion.php';
-
-if (!$conexion_db) {
-    die("La conexión falló.");
-}
-
-$user_check = 'Escroto McBolas'; // Cambia esto al nombre que deseas buscar
-
-// Preparar la consulta
-$stmt = $conexion_db->prepare("SELECT idCliente, nombre FROM cliente WHERE nombre = :user_check");
-$stmt->bindParam(':user_check', $user_check);
-$stmt->execute();
-
-// Ejecutar la consulta
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
-if ($row) {
-    $id_Cliente = $row['idCliente'];
-    $nombre_Cliente = $row['nombre']; // Almacena el nombre del cliente
-} else {
-    $id_Cliente = null; 
-    $nombre_Cliente = null; // Maneja el caso de no encontrar el cliente
-}
-?>
-  <?php if ($nombre_Cliente): ?>
+                <?php if ($nombre_Cliente): ?>
         <p>Nombre del cliente: <?php echo htmlspecialchars($nombre_Cliente); ?></p>
     <?php else: ?>
-        <p>No se encontró el cliente.</p>
+        <p>No se encontró el cliente con el nombre especificado.</p>
     <?php endif; ?>
                 </div>
                 <img onclick="mostrar()"  src="png-transparent-gear.png" width="64" height="64" style="margin-top: -3%; margin-left: 90%;"> 
