@@ -1,53 +1,3 @@
-<?php
-// Activar la visualización de errores
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Incluir el archivo de conexión a la base de datos
-include("conexion.php");
-
-// Iniciar o restaurar la sesión
-session_start();
-//$_SESSION['login_user'] = 'OscarAlberto';
-// Inicializar la variable para evitar el aviso
-$nombre_Cliente = null;
-
-// Verificar si el usuario ya está logueado
-if (!isset($_SESSION['login_user'])) {
-    // Si no está logueado, obtener el primer usuario de la tabla
-    $stmt = $conexion_db->prepare("SELECT idCliente, nombre FROM cliente LIMIT 1");
-    $stmt->execute();
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if ($row) {
-        $_SESSION['login_user'] = $row['nombre']; // Almacenar el usuario en la sesión
-    } else {
-        // Si no hay usuarios en la tabla, mostrar un mensaje de error
-        die("No se encontraron usuarios en la tabla de clientes.");
-    }
-}
-
-// Configurar el nombre del cliente a buscar
-$user_check = $_SESSION['login_user'];
-
-// Preparar la consulta SQL para buscar información del cliente
-$stmt = $conexion_db->prepare("SELECT idCliente, nombre FROM cliente WHERE nombre = :user_check");
-$stmt->bindParam(':user_check', $user_check);
-$stmt->execute();
-
-// Obtener los resultados de la consulta
-$row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-// Verificar si se encontró el cliente
-if ($row) {
-    $id_Cliente = $row['idCliente'];
-    $nombre_Cliente = $row['nombre'];
-} else {
-    $id_Cliente = null;
-    $nombre_Cliente = null;
-}
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,11 +57,64 @@ if ($row) {
                 <img src="1077114.png" width="64" height="64" style="margin-top: 1.5%;"> 
                 <div style=" margin-top: -4%; margin-left: 8%;">
                     
-                <?php if ($nombre_Cliente): ?>
-        <p>Nombre del cliente: <?php echo htmlspecialchars($nombre_Cliente); ?></p>
-    <?php else: ?>
-        <p>No se encontró el cliente con el nombre especificado.</p>
-    <?php endif; ?>
+                <?php
+// ELIMINAR 
+// $user_check = 'Escroto McBolas'; 
+
+// ELIMINAR 
+// $stmt = $conexion_db->prepare("SELECT idCliente, nombre FROM cliente WHERE nombre = :user_check");
+
+// ELIMINAR 
+// $stmt->bindParam(':user_check', $user_check);
+
+// Consulta para obtener todos los clientes
+$stmt = $conexion_db->prepare("SELECT idCliente, nombre FROM cliente");
+$stmt->execute();
+
+// ELIMINAR ESTAS LÍNEAS 
+// $row = $stmt->fetch(PDO::FETCH_ASSOC);
+// if ($row) {
+//     $id_Cliente = $row['idCliente'];
+//     $nombre_Cliente = $row['nombre'];
+// } else {
+//     $id_Cliente = null;
+//     $nombre_Cliente = null;
+// }
+
+// Obtener todos los clientes
+$clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!-- ELIMINAR ESTE BLOQUE
+<?php if ($nombre_Cliente): ?>
+    <p>Nombre del cliente: <?php echo htmlspecialchars($nombre_Cliente); ?></p>
+<?php else: ?>
+    <p>No se encontró el cliente.</p>
+<?php endif; ?>
+-->
+
+<!-- NUEVO CÓDIGO - Mostrar tabla de clientes -->
+<?php if ($clientes && count($clientes) > 0): ?>
+    <h2>Lista de Clientes</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($clientes as $cliente): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($cliente['idCliente']); ?></td>
+                <td><?php echo htmlspecialchars($cliente['nombre']); ?></td>
+            </tr>
+        <?php endforeach; ?>
+        </tbody>
+    </table>
+<?php else: ?>
+    <p>No hay clientes registrados en la base de datos.</p>
+<?php endif; ?>
                 </div>
                 <img onclick="mostrar()"  src="png-transparent-gear.png" width="64" height="64" style="margin-top: -3%; margin-left: 90%;"> 
             </div>

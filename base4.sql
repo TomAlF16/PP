@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-10-2024 a las 20:39:31
--- Versión del servidor: 8.0.33
+-- Tiempo de generación: 23-10-2024 a las 22:44:38
+-- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `base3`
+-- Base de datos: `base4`
 --
 
 -- --------------------------------------------------------
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `carrito` (
-  `cantidad` int NOT NULL,
-  `idCarrito` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `cantidad` int(11) NOT NULL,
+  `idCarrito` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -39,10 +39,10 @@ CREATE TABLE `carrito` (
 --
 
 CREATE TABLE `cliente` (
-  `idCliente` int NOT NULL,
+  `idCliente` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
-  `idUsuario` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `idUsuario` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `cliente`
@@ -58,10 +58,10 @@ INSERT INTO `cliente` (`idCliente`, `nombre`, `idUsuario`) VALUES
 --
 
 CREATE TABLE `favorito` (
-  `IDfavorito` int NOT NULL,
-  `IDcliente` int NOT NULL,
-  `IDlibro` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `IDfavorito` int(11) NOT NULL,
+  `IDcliente` int(11) NOT NULL,
+  `IDlibro` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `favorito`
@@ -77,15 +77,15 @@ INSERT INTO `favorito` (`IDfavorito`, `IDcliente`, `IDlibro`) VALUES
 --
 
 CREATE TABLE `libro` (
-  `idLibro` int NOT NULL,
+  `idLibro` int(11) NOT NULL,
   `titulo` varchar(50) NOT NULL,
   `autor` varchar(50) NOT NULL,
-  `stockAlquiler` int NOT NULL,
+  `stockAlquiler` int(11) NOT NULL,
   `stockVenta` tinyint(1) NOT NULL,
-  `PrecioVenta` int NOT NULL,
-  `PrecioAlquiler` int NOT NULL,
+  `PrecioVenta` int(11) NOT NULL,
+  `PrecioAlquiler` int(11) NOT NULL,
   `Descripcion` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `libro`
@@ -97,16 +97,30 @@ INSERT INTO `libro` (`idLibro`, `titulo`, `autor`, `stockAlquiler`, `stockVenta`
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `metododepago`
+--
+
+CREATE TABLE `metododepago` (
+  `nombreMetodo` varchar(60) NOT NULL,
+  `numero` int(60) NOT NULL,
+  `idMetodo` int(60) NOT NULL,
+  `vencimiento` date NOT NULL,
+  `idCliente` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `usuario`
 --
 
 CREATE TABLE `usuario` (
   `email` varchar(60) NOT NULL,
   `contraseña` varchar(60) NOT NULL,
-  `rol` int NOT NULL,
-  `idUsuario` int NOT NULL,
+  `rol` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
   `Numero` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `usuario`
@@ -122,10 +136,10 @@ INSERT INTO `usuario` (`email`, `contraseña`, `rol`, `idUsuario`, `Numero`) VAL
 --
 
 CREATE TABLE `venta` (
-  `IDventa` int NOT NULL,
-  `IDcliente` int NOT NULL,
-  `IDcarrito` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `IDventa` int(11) NOT NULL,
+  `IDcliente` int(11) NOT NULL,
+  `IDcarrito` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Índices para tablas volcadas
@@ -142,21 +156,27 @@ ALTER TABLE `carrito`
 --
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`idCliente`),
-  ADD KEY `idUsuario` (`idUsuario`);
+  ADD KEY `cliente_ibfk_1` (`idUsuario`);
 
 --
 -- Indices de la tabla `favorito`
 --
 ALTER TABLE `favorito`
   ADD PRIMARY KEY (`IDfavorito`),
-  ADD KEY `IDcliente` (`IDcliente`),
-  ADD KEY `IDlibro` (`IDlibro`);
+  ADD KEY `favorito_ibfk_2` (`IDlibro`),
+  ADD KEY `favorito_ibfk_3` (`IDcliente`);
 
 --
 -- Indices de la tabla `libro`
 --
 ALTER TABLE `libro`
   ADD PRIMARY KEY (`idLibro`);
+
+--
+-- Indices de la tabla `metododepago`
+--
+ALTER TABLE `metododepago`
+  ADD PRIMARY KEY (`idMetodo`);
 
 --
 -- Indices de la tabla `usuario`
@@ -168,8 +188,9 @@ ALTER TABLE `usuario`
 -- Indices de la tabla `venta`
 --
 ALTER TABLE `venta`
-  ADD KEY `IDcliente` (`IDcliente`),
-  ADD KEY `IDcarrito` (`IDcarrito`);
+  ADD PRIMARY KEY (`IDventa`),
+  ADD KEY `venta_ibfk_1` (`IDcliente`),
+  ADD KEY `venta_ibfk_2` (`IDcarrito`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -179,31 +200,43 @@ ALTER TABLE `venta`
 -- AUTO_INCREMENT de la tabla `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `idCarrito` int NOT NULL AUTO_INCREMENT;
+  MODIFY `idCarrito` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `favorito`
 --
 ALTER TABLE `favorito`
-  MODIFY `IDfavorito` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `IDfavorito` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `libro`
 --
 ALTER TABLE `libro`
-  MODIFY `idLibro` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `metododepago`
+--
+ALTER TABLE `metododepago`
+  MODIFY `idMetodo` int(60) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `venta`
+--
+ALTER TABLE `venta`
+  MODIFY `IDventa` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-10-2024 a las 19:45:41
+-- Tiempo de generación: 16-10-2024 a las 20:39:31
 -- Versión del servidor: 8.0.33
 -- Versión de PHP: 7.4.29
 
@@ -41,9 +41,15 @@ CREATE TABLE `carrito` (
 CREATE TABLE `cliente` (
   `idCliente` int NOT NULL,
   `nombre` varchar(50) NOT NULL,
-  `idUsuario` int NOT NULL,
-  `idfavorito` int NOT NULL
+  `idUsuario` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`idCliente`, `nombre`, `idUsuario`) VALUES
+(2, 'Escroto McBolas', 1);
 
 -- --------------------------------------------------------
 
@@ -57,6 +63,13 @@ CREATE TABLE `favorito` (
   `IDlibro` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Volcado de datos para la tabla `favorito`
+--
+
+INSERT INTO `favorito` (`IDfavorito`, `IDcliente`, `IDlibro`) VALUES
+(1, 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -69,10 +82,17 @@ CREATE TABLE `libro` (
   `autor` varchar(50) NOT NULL,
   `stockAlquiler` int NOT NULL,
   `stockVenta` tinyint(1) NOT NULL,
-  `PrecioVenta` tinyint(1) NOT NULL,
+  `PrecioVenta` int NOT NULL,
   `PrecioAlquiler` int NOT NULL,
   `Descripcion` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `libro`
+--
+
+INSERT INTO `libro` (`idLibro`, `titulo`, `autor`, `stockAlquiler`, `stockVenta`, `PrecioVenta`, `PrecioAlquiler`, `Descripcion`) VALUES
+(1, 'Guia recetas 1', 'Pedro Martinez', 5, 3, 10000, 2000, '');
 
 -- --------------------------------------------------------
 
@@ -122,8 +142,7 @@ ALTER TABLE `carrito`
 --
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`idCliente`),
-  ADD KEY `idUsuario` (`idUsuario`),
-  ADD KEY `idfavorito` (`idfavorito`);
+  ADD KEY `idUsuario` (`idUsuario`);
 
 --
 -- Indices de la tabla `favorito`
@@ -166,13 +185,19 @@ ALTER TABLE `carrito`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int NOT NULL AUTO_INCREMENT;
+  MODIFY `idCliente` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `favorito`
+--
+ALTER TABLE `favorito`
+  MODIFY `IDfavorito` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `libro`
 --
 ALTER TABLE `libro`
-  MODIFY `idLibro` int NOT NULL AUTO_INCREMENT;
+  MODIFY `idLibro` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
@@ -188,8 +213,7 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`),
-  ADD CONSTRAINT `cliente_ibfk_2` FOREIGN KEY (`idfavorito`) REFERENCES `favorito` (`IDfavorito`);
+  ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
 
 --
 -- Filtros para la tabla `favorito`

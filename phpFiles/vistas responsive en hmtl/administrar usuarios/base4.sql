@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-10-2024 a las 20:34:11
--- Versión del servidor: 10.4.24-MariaDB
+-- Tiempo de generación: 16-10-2024 a las 20:39:31
+-- Versión del servidor: 8.0.33
 -- Versión de PHP: 7.4.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `base`
+-- Base de datos: `base3`
 --
 
 -- --------------------------------------------------------
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `carrito` (
-  `cantidad` int(11) NOT NULL,
-  `idCarrito` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `cantidad` int NOT NULL,
+  `idCarrito` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -39,11 +39,17 @@ CREATE TABLE `carrito` (
 --
 
 CREATE TABLE `cliente` (
-  `idCliente` int(11) NOT NULL,
+  `idCliente` int NOT NULL,
   `nombre` varchar(50) NOT NULL,
-  `idUsuario` int(11) NOT NULL,
-  `idfavorito` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `idUsuario` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `cliente`
+--
+
+INSERT INTO `cliente` (`idCliente`, `nombre`, `idUsuario`) VALUES
+(2, 'Escroto McBolas', 1);
 
 -- --------------------------------------------------------
 
@@ -52,10 +58,17 @@ CREATE TABLE `cliente` (
 --
 
 CREATE TABLE `favorito` (
-  `IDfavorito` int(11) NOT NULL,
-  `IDcliente` int(11) NOT NULL,
-  `IDlibro` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `IDfavorito` int NOT NULL,
+  `IDcliente` int NOT NULL,
+  `IDlibro` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `favorito`
+--
+
+INSERT INTO `favorito` (`IDfavorito`, `IDcliente`, `IDlibro`) VALUES
+(1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -64,15 +77,22 @@ CREATE TABLE `favorito` (
 --
 
 CREATE TABLE `libro` (
-  `idLibro` int(11) NOT NULL,
+  `idLibro` int NOT NULL,
   `titulo` varchar(50) NOT NULL,
   `autor` varchar(50) NOT NULL,
-  `stockAlquiler` int(11) NOT NULL,
+  `stockAlquiler` int NOT NULL,
   `stockVenta` tinyint(1) NOT NULL,
-  `PrecioVenta` tinyint(1) NOT NULL,
-  `PrecioAlquiler` int(11) NOT NULL,
+  `PrecioVenta` int NOT NULL,
+  `PrecioAlquiler` int NOT NULL,
   `Descripcion` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `libro`
+--
+
+INSERT INTO `libro` (`idLibro`, `titulo`, `autor`, `stockAlquiler`, `stockVenta`, `PrecioVenta`, `PrecioAlquiler`, `Descripcion`) VALUES
+(1, 'Guia recetas 1', 'Pedro Martinez', 5, 3, 10000, 2000, '');
 
 -- --------------------------------------------------------
 
@@ -83,10 +103,17 @@ CREATE TABLE `libro` (
 CREATE TABLE `usuario` (
   `email` varchar(60) NOT NULL,
   `contraseña` varchar(60) NOT NULL,
-  `rol` int(11) NOT NULL,
-  `idUsuario` int(11) NOT NULL,
+  `rol` int NOT NULL,
+  `idUsuario` int NOT NULL,
   `Numero` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`email`, `contraseña`, `rol`, `idUsuario`, `Numero`) VALUES
+('Test@gmail.com', '2313133122', 1, 1, 'password');
 
 -- --------------------------------------------------------
 
@@ -95,10 +122,10 @@ CREATE TABLE `usuario` (
 --
 
 CREATE TABLE `venta` (
-  `IDventa` int(11) NOT NULL,
-  `IDcliente` int(11) NOT NULL,
-  `IDcarrito` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `IDventa` int NOT NULL,
+  `IDcliente` int NOT NULL,
+  `IDcarrito` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Índices para tablas volcadas
@@ -115,8 +142,7 @@ ALTER TABLE `carrito`
 --
 ALTER TABLE `cliente`
   ADD PRIMARY KEY (`idCliente`),
-  ADD KEY `idUsuario` (`idUsuario`),
-  ADD KEY `idfavorito` (`idfavorito`);
+  ADD KEY `idUsuario` (`idUsuario`);
 
 --
 -- Indices de la tabla `favorito`
@@ -153,25 +179,31 @@ ALTER TABLE `venta`
 -- AUTO_INCREMENT de la tabla `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `idCarrito` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCarrito` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idCliente` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `favorito`
+--
+ALTER TABLE `favorito`
+  MODIFY `IDfavorito` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `libro`
 --
 ALTER TABLE `libro`
-  MODIFY `idLibro` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idLibro` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idUsuario` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Restricciones para tablas volcadas
@@ -181,8 +213,7 @@ ALTER TABLE `usuario`
 -- Filtros para la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`),
-  ADD CONSTRAINT `cliente_ibfk_2` FOREIGN KEY (`idfavorito`) REFERENCES `favorito` (`IDfavorito`);
+  ADD CONSTRAINT `cliente_ibfk_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idUsuario`);
 
 --
 -- Filtros para la tabla `favorito`
