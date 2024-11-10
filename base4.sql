@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-10-2024 a las 22:44:38
--- Versión del servidor: 10.4.24-MariaDB
--- Versión de PHP: 7.4.29
+-- Tiempo de generación: 10-11-2024 a las 21:54:00
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `carrito` (
   `cantidad` int(11) NOT NULL,
   `idCarrito` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -42,14 +42,15 @@ CREATE TABLE `cliente` (
   `idCliente` int(11) NOT NULL,
   `nombre` varchar(50) NOT NULL,
   `idUsuario` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `cliente`
 --
 
 INSERT INTO `cliente` (`idCliente`, `nombre`, `idUsuario`) VALUES
-(2, 'Escroto McBolas', 1);
+(2, 'Escroto McBolas', 1),
+(7, 'John Salchichon', 2);
 
 -- --------------------------------------------------------
 
@@ -61,7 +62,7 @@ CREATE TABLE `favorito` (
   `IDfavorito` int(11) NOT NULL,
   `IDcliente` int(11) NOT NULL,
   `IDlibro` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `favorito`
@@ -79,20 +80,22 @@ INSERT INTO `favorito` (`IDfavorito`, `IDcliente`, `IDlibro`) VALUES
 CREATE TABLE `libro` (
   `idLibro` int(11) NOT NULL,
   `titulo` varchar(50) NOT NULL,
-  `autor` varchar(50) NOT NULL,
+  `NombreAutor` varchar(50) NOT NULL,
   `stockAlquiler` int(11) NOT NULL,
   `stockVenta` tinyint(1) NOT NULL,
   `PrecioVenta` int(11) NOT NULL,
   `PrecioAlquiler` int(11) NOT NULL,
-  `Descripcion` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `Descripcion` text NOT NULL,
+  `imagen` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `libro`
 --
 
-INSERT INTO `libro` (`idLibro`, `titulo`, `autor`, `stockAlquiler`, `stockVenta`, `PrecioVenta`, `PrecioAlquiler`, `Descripcion`) VALUES
-(1, 'Guia recetas 1', 'Pedro Martinez', 5, 3, 10000, 2000, '');
+INSERT INTO `libro` (`idLibro`, `titulo`, `NombreAutor`, `stockAlquiler`, `stockVenta`, `PrecioVenta`, `PrecioAlquiler`, `Descripcion`, `imagen`) VALUES
+(1, 'Guia recetas 1', 'Pedro Martinez', 5, 3, 10000, 2000, '', ''),
+(2, 'Transformers One Novelization', 'Ryder Windham', 3, 8, 27, 14, 'Paramount’s animated film Transformers One starring Chris Hemsworth, Scarlett Johansson, Brian Tyree Henry, and Keegan-Michael Key flies into theaters this fall!\r\n\r\nDon’t miss this action-packed novelization that comes with an eight-page, full-color glossy insert with stills from the movie!\r\n\r\nTRANSFORMERS ONE is the untold origin story of Optimus Prime and Megatron, known as sworn enemies, but who once were friends bonded like brothers who changed the fate of Cybertron forever. The first-ever fully CG-animated Transformers movie, TRANSFORMERS ONE features a star-studded voice cast, including Chris Hemsworth, Brian Tyree Henry, Scarlett Johansson, Keegan-Michael Key, and Steve Buscemi with Laurence Fishburne and Jon Hamm.\r\n\r\nTRANSFORMERS and HASBRO and all related trademarks and logos are trademarks of Hasbro, Inc. ©2024 Hasbro. ©2024 Paramount Pictures Corporation.', 'C:\\xampp\\htdocs\\PP\\phpFiles\\vistas responsive en hmtl\\subir archivo\\imagenes\\test.jpg');
 
 -- --------------------------------------------------------
 
@@ -106,7 +109,7 @@ CREATE TABLE `metododepago` (
   `idMetodo` int(60) NOT NULL,
   `vencimiento` date NOT NULL,
   `idCliente` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -120,14 +123,15 @@ CREATE TABLE `usuario` (
   `rol` int(11) NOT NULL,
   `idUsuario` int(11) NOT NULL,
   `Numero` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
 INSERT INTO `usuario` (`email`, `contraseña`, `rol`, `idUsuario`, `Numero`) VALUES
-('Test@gmail.com', '2313133122', 1, 1, 'password');
+('Test@gmail.com', '2313133122', 1, 1, 'password'),
+('email', 'contraseña', 1, 2, '23131331222342342342');
 
 -- --------------------------------------------------------
 
@@ -139,7 +143,7 @@ CREATE TABLE `venta` (
   `IDventa` int(11) NOT NULL,
   `IDcliente` int(11) NOT NULL,
   `IDcarrito` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Índices para tablas volcadas
@@ -206,7 +210,7 @@ ALTER TABLE `carrito`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `favorito`
@@ -218,7 +222,7 @@ ALTER TABLE `favorito`
 -- AUTO_INCREMENT de la tabla `libro`
 --
 ALTER TABLE `libro`
-  MODIFY `idLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `metododepago`
@@ -230,7 +234,7 @@ ALTER TABLE `metododepago`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`

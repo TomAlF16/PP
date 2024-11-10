@@ -18,21 +18,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Recoger los datos del formulario
     $titulo = isset($_POST['titulo']) ? trim($_POST['titulo']) : '';
     $precio = isset($_POST['precio']) ? trim($_POST['precio']) : '';
+    $precioAlquiler = isset($_POST['precioAlquiler']) ? trim($_POST['precioAlquiler']) : '';
+    $stockVenta = isset($_POST['StockVenta']) ? trim($_POST['StockVenta']) : '';
+    $stockAlquiler = isset($_POST['StockAlquiler']) ? trim($_POST['StockAlquiler']) : '';
+    $nombreAutor = isset($_POST['NombreAutor']) ? trim($_POST['NombreAutor']) : '';
     $descripcion = isset($_POST['descripcion']) ? trim($_POST['descripcion']) : '';
 
     // Validación simple
-    if (empty($titulo) || empty($precio) || empty($descripcion)) {
+    if (empty($titulo) || empty($precio) || empty($descripcion) || empty($precioAlquiler) || empty($stockVenta) || empty($stockAlquiler) || empty($nombreAutor)) {
         echo "Todos los campos son obligatorios.";
-    } elseif (!is_numeric($precio)) {
-        echo "El precio debe ser un número válido.";
+    } elseif (!is_numeric($precio) || !is_numeric($precioAlquiler) || !is_numeric($stockVenta) || !is_numeric($stockAlquiler)) {
+        echo "El precio y los stocks deben ser números válidos.";
     } else {
         // Preparar la consulta SQL para insertar el libro
-        $sql = "INSERT INTO libro (titulo, PrecioVenta, Descripcion) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO libro (titulo, PrecioVenta, PrecioAlquiler, StockVenta, StockAlquiler, NombreAutor, Descripcion) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
         // Preparar la declaración
         if ($stmt = $conn->prepare($sql)) {
             // Enlazar los parámetros
-            $stmt->bind_param("sss", $titulo, $precio, $descripcion);
+            $stmt->bind_param("sssssss", $titulo, $precio, $precioAlquiler, $stockVenta, $stockAlquiler, $nombreAutor, $descripcion);
 
             // Ejecutar la consulta
             if ($stmt->execute()) {
@@ -47,58 +51,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "Error en la consulta SQL: " . $conn->error;
         }
     }
-}
 
-// Cerrar la conexión
-$conn->close();
-?>
-<?php
-// Conexión a la base de datos
-$host = "localhost"; // Cambiar si es necesario
-$usuario = "root";   // Cambiar si es necesario
-$contrasena = "";    // Cambiar si es necesario
-$base_de_datos = "base4"; // Cambiar con el nombre de tu base de datos
+    // Subida de la imagen
+    if (isset($_FILES['portada'])) {
+        $directorio = 'imagenes/';
+        $nombreImagen = $_FILES['portada']['name'];
+        $rutaTemporal = $_FILES['portada']['tmp_name'];
+        $rutaDestino = $directorio . $nombreImagen;
 
-// Conexión a la base de datos
-$conn = new mysqli($host, $usuario, $contrasena, $base_de_datos);
-
-// Verificar si hay errores en la conexión
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
-}
-
-// Procesar el formulario si se ha enviado
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Recoger los datos del formulario
-    $titulo = isset($_POST['titulo']) ? trim($_POST['titulo']) : '';
-    $precio = isset($_POST['precio']) ? trim($_POST['precio']) : '';
-    $descripcion = isset($_POST['descripcion']) ? trim($_POST['descripcion']) : '';
-
-    // Validación simple
-    if (empty($titulo) || empty($precio) || empty($descripcion)) {
-        echo "Todos los campos son obligatorios.";
-    } elseif (!is_numeric($precio)) {
-        echo "El precio debe ser un número válido.";
-    } else {
-        // Preparar la consulta SQL para insertar el libro
-        $sql = "INSERT INTO libro (titulo, PrecioVenta, Descripcion) VALUES (?, ?, ?)";
-
-        // Preparar la declaración
-        if ($stmt = $conn->prepare($sql)) {
-            // Enlazar los parámetros
-            $stmt->bind_param("sss", $titulo, $precio, $descripcion);
-
-            // Ejecutar la consulta
-            if ($stmt->execute()) {
-                echo "Nuevo libro agregado exitosamente.";
-            } else {
-                echo "Error al agregar el libro: " . $stmt->error;
-            }
-
-            // Cerrar la declaración
-            $stmt->close();
+        // Verificar si la imagen se subió correctamente
+        if (move_uploaded_file($rutaTemporal, $rutaDestino)) {
+            echo "Imagen subida correctamente.";
         } else {
-            echo "Error en la consulta SQL: " . $conn->error;
+            echo "Error al subir la imagen.";
         }
     }
 }
@@ -106,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // Cerrar la conexión
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -157,6 +123,14 @@ $conn->close();
             width: 368px;
             text-align: center;
             margin-top: 6%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #ParteGris2 img {
+            object-fit: contain; /* Mantiene la proporción de la imagen y la adapta al contenedor */
+            width: 100%;
+            height: 100%;
         }
 
         input[type="text"], textarea {
@@ -201,34 +175,58 @@ $conn->close();
         <div style="margin-left: 15%;">
             <div id="ParteGris2">
                 <div style="text-align: center;">
-                    <img src="https://cdn-icons-png.freepik.com/512/25/25666.png" width="150" height="150" style="margin-top: 30%;">
+                    <!-- Mostrar la imagen previa si existe -->
+                    <?php
+                    if (isset($rutaDestino) && file_exists($rutaDestino)) {
+                        echo '<img src="' . $rutaDestino . '" alt="Imagen del libro">';
+                    } else {
+                        echo '<img src="https://cdn-icons-png.freepik.com/512/25/25666.png" alt="Imagen por defecto">';
+                    }
+                    ?>
                 </div>
             </div>
         </div>
 
-        <div style="margin-left: 10%; margin-top: 6%;">
+        <div style="margin-left: 10%; margin-top: 4%;">
             <div style="margin-left: 35%; margin-top: -35%;">
-                <form action="" method="POST">
+                <form action="" method="POST" enctype="multipart/form-data">
                     <input type="text" name="titulo" placeholder="Ingresar título" required>
                 </div>
-                <div style="margin-left: 35%; margin-top: 3%;">
+                <div style="margin-left: 35%; margin-top: 1%;">
                     <input type="text" name="precio" placeholder="Ingresar precio" required>
                 </div>
+                <div style="margin-left: 35%; margin-top: 1%;">
+                    <input type="text" name="precioAlquiler" placeholder="Ingresar precio del alquiler" required>
+                </div>
+                
+                <div style="margin-left: 35%; margin-top: 1%;">
+                    <input type="text" name="StockVenta" placeholder="Ingresar Stock a la Venta" required>
+                </div>
+                 
+                <div style="margin-left: 35%; margin-top: 1%;">
+                    <input type="text" name="StockAlquiler" placeholder="Ingresar Stock para alquilar" required>
+                </div>
+                <div style="margin-left: 35%; margin-top: 1%;">
+                    <input type="text" name="NombreAutor" placeholder="Ingresar Nombre del Autor" required>
+                </div>
 
-                <div style="margin-left: 35%; margin-top: 3%;">
+                <div style="margin-left: 35%; margin-top: 1%;">
                     <textarea name="descripcion" placeholder="Ingresar descripción" style="width: 50%; height: 150px;" required></textarea>
                 </div>
 
-                <div style="margin-left: 35%; margin-top: 3%;">
-                    <button type="submit">Agregar Libro</button>
+                <div style="margin-left: 35%; margin-top: 1%;">
+                    <input type="file" name="portada" required>
+                </div>
+
+                <div style="margin-left: 35%; margin-top: 1%;">
+                    <button type="submit">Agregar libro</button>
                 </div>
             </form>
         </div>
-
     </main>
 
     <footer>
-        <p>La Librería Confiable - Todos los derechos reservados.</p>
+        <p>&copy; 2024 La Librería Confiable</p>
     </footer>
 </body>
 </html>
