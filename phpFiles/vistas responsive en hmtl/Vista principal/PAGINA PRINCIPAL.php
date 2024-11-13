@@ -51,18 +51,20 @@ if ($result === false) {
                         // Mostrar cada libro
                         while($row = $result->fetch_assoc()) {
                             echo '<div class="book">';
-                            // Ruta correcta desde la base de datos
-                            $image_path = 'http://localhost' . $row['imagen']; // Usamos la ruta absoluta completa desde el servidor
+                            
+                            // Ruta correcta de la imagen en el directorio 'imagenes/' (se asume que las imágenes están en esta carpeta)
+                            // Eliminamos cualquier prefijo innecesario (como el punto y barra invertida) con ltrim
+                            $image_path = './imagenes/' . ltrim($row['imagen'], '.\\'); 
 
                             // Verifica si la imagen existe en el servidor
-                            $full_image_path = $_SERVER['DOCUMENT_ROOT'] . $row['imagen']; // Ruta completa en el servidor
-                            
+                            $full_image_path = $_SERVER['DOCUMENT_ROOT'] . './imagenes/' . ltrim($row['imagen'], '.\\'); 
+
                             // Usamos file_exists para verificar si la imagen realmente existe en el sistema
-                            if (file_exists($full_image_path)) {
+                            if (file_exists($full_image_path) && !empty($row['imagen'])) {
                                 echo '<img src="' . $image_path . '" alt="' . $row['titulo'] . '">';
                             } else {
                                 // Si no existe la imagen, muestra la imagen predeterminada
-                                echo '<img src="http://localhost/PP/phpFiles/vistas%20responsive%20en%20html/Vista%20principal/imagenes/default.jpg" alt="Imagen no disponible">';
+                                echo '<img src="./imagenes/default.jpg" alt="Imagen no disponible">';
                             }
 
                             echo '<p>' . $row['titulo'] . '</p>';
