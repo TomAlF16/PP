@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-11-2024 a las 21:54:00
+-- Tiempo de generación: 18-11-2024 a las 18:52:40
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -50,7 +50,8 @@ CREATE TABLE `cliente` (
 
 INSERT INTO `cliente` (`idCliente`, `nombre`, `idUsuario`) VALUES
 (2, 'Escroto McBolas', 1),
-(7, 'John Salchichon', 2);
+(7, 'John Salchichon', 2),
+(8, 'Tomás', 4);
 
 -- --------------------------------------------------------
 
@@ -95,7 +96,8 @@ CREATE TABLE `libro` (
 
 INSERT INTO `libro` (`idLibro`, `titulo`, `NombreAutor`, `stockAlquiler`, `stockVenta`, `PrecioVenta`, `PrecioAlquiler`, `Descripcion`, `imagen`) VALUES
 (1, 'Guia recetas 1', 'Pedro Martinez', 5, 3, 10000, 2000, '', ''),
-(2, 'Transformers One Novelization', 'Ryder Windham', 3, 8, 27, 14, 'Paramount’s animated film Transformers One starring Chris Hemsworth, Scarlett Johansson, Brian Tyree Henry, and Keegan-Michael Key flies into theaters this fall!\r\n\r\nDon’t miss this action-packed novelization that comes with an eight-page, full-color glossy insert with stills from the movie!\r\n\r\nTRANSFORMERS ONE is the untold origin story of Optimus Prime and Megatron, known as sworn enemies, but who once were friends bonded like brothers who changed the fate of Cybertron forever. The first-ever fully CG-animated Transformers movie, TRANSFORMERS ONE features a star-studded voice cast, including Chris Hemsworth, Brian Tyree Henry, Scarlett Johansson, Keegan-Michael Key, and Steve Buscemi with Laurence Fishburne and Jon Hamm.\r\n\r\nTRANSFORMERS and HASBRO and all related trademarks and logos are trademarks of Hasbro, Inc. ©2024 Hasbro. ©2024 Paramount Pictures Corporation.', '.\imagenes\test.jpg');
+(4, 'ad', 'asd', 2, 2, 22, 222, 'asd', 'imagenes/Raising_the_Bar_cover2.jpg'),
+(5, 'ad', 'asd', 2, 2, 22, 222, 'asd', 'imagenes/Raising_the_Bar_cover2.jpg');
 
 -- --------------------------------------------------------
 
@@ -131,7 +133,8 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`email`, `contraseña`, `rol`, `idUsuario`, `Numero`) VALUES
 ('Test@gmail.com', '2313133122', 1, 1, 'password'),
-('email', 'contraseña', 1, 2, '23131331222342342342');
+('email', 'contraseña', 1, 2, '23131331222342342342'),
+('correo@mail.cor', '$2y$10$6XjqZtDtvA3UhRD9hB8zQOwbJCNubXkwG2OyXLqIHU6KmDcFrNjoK', 1, 4, '234234234');
 
 -- --------------------------------------------------------
 
@@ -210,7 +213,7 @@ ALTER TABLE `carrito`
 -- AUTO_INCREMENT de la tabla `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idCliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `favorito`
@@ -222,7 +225,7 @@ ALTER TABLE `favorito`
 -- AUTO_INCREMENT de la tabla `libro`
 --
 ALTER TABLE `libro`
-  MODIFY `idLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idLibro` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `metododepago`
@@ -234,7 +237,7 @@ ALTER TABLE `metododepago`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `venta`

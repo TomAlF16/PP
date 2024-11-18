@@ -15,7 +15,10 @@ if ($conn->connect_error) {
 
 // Obtener los datos del usuario desde la base de datos
 $user_id = $_SESSION['user_id']; // ID del usuario logueado
-$query = "SELECT * FROM usuario WHERE idUsuario = ?";
+$query = "SELECT u.email, u.Numero, c.nombre, u.idUsuario
+          FROM usuario u
+          JOIN cliente c ON u.idUsuario = c.idUsuario
+          WHERE u.idUsuario = ?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
@@ -39,12 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $telefono = $_POST['telefono'];
     $contraseña = $_POST['contraseña'];
-    
-    // Actualizar los datos en la base de datos
-    $conn = new mysqli('localhost', 'root', '', 'base4'); // Reemplaza con tus credenciales
-    if ($conn->connect_error) {
-        die("Conexión fallida: " . $conn->connect_error);
-    }
 
     // Si la contraseña ha sido cambiada, se encripta antes de actualizar
     if (!empty($contraseña)) {
@@ -53,10 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $conn->prepare($query);
         $stmt->bind_param("sssi", $email, $contraseña, $telefono, $user_id);
     } else {
-        // Si la contraseña no ha sido cambiada, solo actualizamos el email y el teléfono
-        $query = "UPDATE usuario SET email = ?, Numero = ? WHERE idUsuario = ?";
+        // Si la contraseña no ha sido cambiada, solo actualizamos el email, nombre y teléfono
+        $query = "UPDATE usuario u 
+                  JOIN cliente c ON u.idUsuario = c.idUsuario
+                  SET u.email = ?, u.Numero = ?, c.nombre = ? 
+                  WHERE u.idUsuario = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("ssi", $email, $telefono, $user_id);
+        $stmt->bind_param("sssi", $email, $telefono, $nombre, $user_id);
     }
 
     // Ejecutar la actualización
@@ -66,6 +66,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error_message = "Error al actualizar los datos: " . $stmt->error;
     }
 
+    $stmt->close();
     $conn->close();
 }
 ?>
@@ -109,17 +110,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form action="" method="POST">
             <div class="mb-3">
                 <label for="nombre" class="form-label">Nombre de usuario:</label>
-                <input class="form-control" type="text" name="nombre" placeholder="Nombre de usuario" value="<?php echo $user['email']; ?>" required>
+                <input class="form-control" type="text" name="nombre" placeholder="Nombre de usuario" value="<?php echo htmlspecialchars($user['nombre']); ?>" required>
             </div>
 
             <div class="mb-3">
                 <label for="email" class="form-label">Correo electrónico:</label>
-                <input class="form-control" type="email" name="email" placeholder="Email" value="<?php echo $user['email']; ?>" required>
+                <input class="form-control" type="email" name="email" placeholder="Email" value="<?php echo htmlspecialchars($user['email']); ?>" required>
             </div>
 
             <div class="mb-3">
                 <label for="telefono" class="form-label">Teléfono:</label>
-                <input class="form-control" type="text" name="telefono" placeholder="Teléfono" value="<?php echo $user['Numero']; ?>" required>
+                <input class="form-control" type="text" name="telefono" placeholder="Teléfono" value="<?php echo htmlspecialchars($user['Numero']); ?>" required>
             </div>
 
             <div class="mb-3">

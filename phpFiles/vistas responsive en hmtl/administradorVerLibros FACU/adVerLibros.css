@@ -1,0 +1,185 @@
+/* Estilo general para el cuerpo */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #fff;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Estilo del header */
+header {
+    background-color: #820303;
+    padding: 20px 0;
+    text-align: center;
+    color: #fff;
+}
+
+header h1 {
+    font-size: 28px;
+    margin: 0;
+}
+
+/* Área de búsqueda */
+.search-area {
+    margin-top: 15px;
+    display: inline-flex;
+}
+
+.search-area input[type="text"] {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 20px;
+    width: 200px;
+    outline: none;
+    margin-right: 10px;
+    background-color: #f4f4f4;
+}
+
+.search-area button {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+    outline: none;
+}
+
+.search-area button:hover {
+    background-color: #f4f4f4;
+}
+
+/* Contenedor de los libros */
+.book-container {
+    display: flex;
+    flex-wrap: wrap; /* Esto permite que las tarjetas se ajusten si no caben en una línea */
+    gap: 20px; /* Espacio entre las tarjetas */
+    justify-content: center; /* Centra las tarjetas horizontalmente */
+    margin-top: 40px;
+}
+
+/* Estilo de cada tarjeta de libro */
+.book-card {
+    width: 220px; /* Ancho de la tarjeta */
+    background-color: #fff;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    text-align: center;
+    padding: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+    max-height: 350px; /* Limitar la altura máxima de las tarjetas */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuir el espacio entre los elementos */
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+}
+
+.book-card img {
+    width: 100%;
+    height: 150px; /* Reducir la altura de las imágenes */
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.book-card h2 {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.book-card p {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 10px; /* Reducir margen entre el título y el autor */
+}
+
+.book-card button {
+    width: 100%;
+    padding: 8px; /* Reducir el padding del botón */
+    background-color: #820303;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.book-card button:hover {
+    background-color: #993333;
+}
+
+/* Estilos para las opciones adicionales */
+.option-box {
+    display: none; /* Inicialmente oculto */
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+/* Estilo para el pie de página */
+footer {
+    background-color: #820303;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Estilo de los botones */
+button {
+    cursor: pointer;
+}
+
+/* Estilo de la tarjeta flotante (cuadrada y más grande) */
+.floating-card {
+    position: fixed;
+    bottom: 20px; /* A 20px de la parte inferior */
+    right: 20px; /* A 20px de la parte derecha */
+    width: 80px; /* Ancho de la tarjeta flotante */
+    height: 80px; /* Alto de la tarjeta flotante */
+    background-color: #820303; /* Color de fondo */
+    border-radius: 8px; /* Esquinas redondeadas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    z-index: 1000; /* Asegura que esté encima de otros elementos */
+    transition: background-color 0.3s ease;
+}
+
+/* Cambiar color al pasar el mouse */
+.floating-card:hover {
+    background-color: #993333;
+}
+
+/* Estilo del icono dentro de la tarjeta */
+.floating-card i {
+    color: white;
+    font-size: 40px; /* Hacer el ícono más grande */
+}
+
+/* Medios de pantalla */
+@media (max-width: 768px) {
+    .book-container {
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .book-card {
+        width: 160px;
+    }
+
+    /* Redimensionar la tarjeta flotante en pantallas más pequeñas */
+    .floating-card {
+        width: 70px;
+        height: 70px;
+    }
+
+    .floating-card i {
+        font-size: 30px; /* Ajustar tamaño del ícono en pantallas pequeñas */
+    }
+}
