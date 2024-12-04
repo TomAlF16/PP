@@ -75,8 +75,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Biblioteca - Crear cuenta</title>
 </head>
 <body>
-<button onclick="history.back()" style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer;">Atrás</button>
-
     <main>
         <section>
             <div id="titulo">
